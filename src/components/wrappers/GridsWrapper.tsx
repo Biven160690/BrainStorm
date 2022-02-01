@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid';
-import { GridsWrapperProps } from '../types/type'
+
+import { GridsWrapperProps } from './type';
 
 function GridsWrapper({ children }: GridsWrapperProps) {
   return (

@@ -1,16 +1,18 @@
+import { Outlet } from 'react-router';
+
 import Header from '../blocks/Header';
 import Footer from '../blocks/Footer';
 
-import { LayoutsProps } from '../types/type';
-import { useStyles } from '../../theme/style'
+import { useStyles } from '../../theme/style';
 
-function Layout({ children }: LayoutsProps) {
+function Layout() {
   const { wrapper, main } = useStyles()
+
   return (
     <div className={wrapper}>
       <Header />
       <main className={main}>
-        {children}
+        <Outlet />
       </main>
       <Footer />
     </div>

@@ -1,32 +1,19 @@
-export interface FormPropsItems {
+export interface AddFormProps {
   header: string;
-  forms?: string[];
-  isWarningForm?: boolean;
+  labels: string[];
+  openInputs: boolean;
   buttons: string[];
 }
-
+export interface DeleteFormProps {
+  header: string;
+  openInputs: boolean;
+  buttons: string[];
+}
 export interface FormProps {
-  [x: string]: FormPropsItems;
+  [key: string]: AddFormProps | DeleteFormProps;
 }
 
-export interface ButtonsColorItems {
-  [key: string]: string;
-}
-
-export interface ButtonsTypeItems extends ButtonsColorItems {}
-
-export interface CreateButtonsProps {
-  button: string;
-  buttonFunctions: { [key: string]: () => void };
-}
-
-export interface ButtonPropsItems {
-  type: string;
-  color: string;
-  onClick?: () => void;
-}
-
-export interface InputPropsItems {
+export interface InputProps {
   label: string;
   error: boolean;
   variant: any;

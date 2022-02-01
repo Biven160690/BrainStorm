@@ -1,25 +1,21 @@
-import { Control, FieldError } from 'react-hook-form';
+import { CardItems, DeckItems, LocationState } from "./interface";
+import { AddFormProps, DeleteFormProps } from "../../helper/interface";
+import { UpdatingDecks } from "../../hooks/type";
 
-import { OnSubmitProps, IFormInput }  from './interface'
-import { ButtonFunctionsItems } from '../hoc/interface'
-import { FormPropsItems } from '../../helper/interface';
+export type OnSubmitProps = (data: DeckItems | CardItems) => void;
 
-export type DataManagementFormProps = {
-  open: boolean;
-  handleClickCloseModal: () => void;
-  onSubmit: (data: OnSubmitProps) => void;
-  formItems: FormPropsItems;
-  buttonFunctions: ButtonFunctionsItems
-};
-
-export type FormsInputProps = {
-  control: Control<IFormInput, object>;
-  errors: { [x: string]: FieldError };
-  form: string;
-};
-
-export type FormsButtonProps = {
-    button: string;
-    buttonFunctions: ButtonFunctionsItems
+export type FormItems = DeleteFormProps &
+  Omit<AddFormProps, "labels"> & {
+    labels?: string[];
   };
-  
+
+export type ModalsControlProps = {
+  updatingDecks: UpdatingDecks;
+};
+
+export type ModalProps = {
+  formItems: FormItems;
+  handleClickGoBack: () => void;
+  openModal: LocationState;
+  onSubmit: OnSubmitProps;
+};

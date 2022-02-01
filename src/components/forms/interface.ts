@@ -1,9 +1,15 @@
-export interface OnSubmitProps {
-  [key: string]: string;
+export interface CardItems {
+  "new word": string;
+  translation: string;
+}
+export interface DeckItems {
+  title: string;
+  description: string;
+}
+export interface LocationState {
+  open: boolean;
 }
 
-export interface IFormInput {
-  [key: string]: string;
+export interface FormInput extends CardItems, DeckItems {
+  [key: string]: string
 }
-
-
