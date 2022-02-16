@@ -1,11 +1,9 @@
-export type CardItems = {
+export type CardItem = {
   "new word": string;
   translation: string;
 };
 
-export type DeckItems = {
+export type DeckItem = {
   title: string;
   description: string;
 };
-
-export type OnSubmitProps = (data?: DeckItems | CardItems) => void;

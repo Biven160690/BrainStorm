@@ -1,16 +1,17 @@
 import { Button } from "@mui/material";
 
-import { OnSubmitProps } from "../type";
-
 type DeleteDeckFormProps = {
-  handleClickGoBack: () => void,
-  onSubmit: OnSubmitProps
-}
+  handleClickGoBack: () => void;
+  onSubmit: () => void;
+};
 
-type handleSubmitProps = (e: React.FormEvent<HTMLFormElement>) => void
+type handleSubmitProps = (e: React.FormEvent<HTMLFormElement>) => void;
 
-export const DeleteDeckForm = ({ handleClickGoBack, onSubmit }: DeleteDeckFormProps) => {
-
+export const DeleteDeckForm = ({
+  handleClickGoBack,
+  onSubmit,
+}: DeleteDeckFormProps) => {
+  
   const handleSubmit: handleSubmitProps = (e) => {
     e.preventDefault();
     onSubmit();
