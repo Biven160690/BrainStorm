@@ -1,115 +1,117 @@
-import { CardItems, DeckItems } from "../components/forms/interface";
-import { Decks } from "../hooks/interface";
+import { Card, Deck } from "../../../copy/src/hooks/interface";
+import { StatusItem } from "./interface";
+
 import {
-  creatingCard,
-  creatingDeck,
-  removingCard,
-  removingDeck,
+  createCard,
+  removeCard,
+  removeDeck,
 } from "./helperFunctions";
 
-export class DataManagment {
-  addCard(
-    deckId: string,
-    newItems: CardItems,
-    setStatus: (arg: string) => void
-  ): void {
+export class DataManagement {
+  addCard(deckId: string , newCard: Card): StatusItem {
     try {
       const request: string | null = window.localStorage.getItem("decks");
       if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = creatingCard(respons, deckId, newItems);
+        const respons: Deck[] = JSON.parse(request);
+        const newDecks: Deck[] = createCard(respons, deckId, newCard);
         window.localStorage.setItem("decks", JSON.stringify(newDecks));
       } else {
-        setStatus("Error not found data");
+        throw new Error("Error not found data");
       }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully card added"
-          : "Error card added";
-      setStatus(status);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setStatus(error.message);
+        throw new Error(error.message);
       }
+    }
+    if (window.localStorage.getItem("decks") !== null) {
+      return { name: "success", message: "Successfully card added" };
+    } else {
+      throw new Error("Error! Card didn`t add");
     }
   }
 
-  addDeck(data: DeckItems, setStatus: (arg: string) => void): void {
+  addDeck(newDeck: Deck): StatusItem {
     try {
       const request: string | null = window.localStorage.getItem("decks");
       if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks = creatingDeck(data);
-        const updatedDecks: Decks[] = [...respons, newDecks];
+        const respons: Deck[] = JSON.parse(request);
+        const updatedDecks: Deck[] = [...respons, newDeck];
         window.localStorage.setItem("decks", JSON.stringify(updatedDecks));
       } else {
-        setStatus("Error not found data");
+        throw new Error("Error not found data");
       }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully deck added"
-          : "Error! Deck didn`t add";
-      setStatus(status);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setStatus(error.message);
+        throw new Error(error.message);
       }
+    }
+
+    if (window.localStorage.getItem("decks") !== null) {
+      return { name: "success", message: "Successfully deck added" };
+    } else {
+      throw new Error("Error! Deck didn`t add");
     }
   }
 
-  deleteDeck(deckId: string, setStatus: (arg: string) => void): void {
+  deleteDeck(deckId: string): StatusItem {
     try {
       const request: string | null = window.localStorage.getItem("decks");
       if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = removingDeck(respons, deckId);
+        const respons: Deck[] = JSON.parse(request);
+        const newDecks: Deck[] = removeDeck(respons, deckId);
         window.localStorage.setItem("decks", JSON.stringify(newDecks));
       } else {
-        setStatus("Error not found data");
+        throw new Error("Error not found data");
       }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully deck deleted"
-          : "Error! Deck  didn`t delete";
-      setStatus(status);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setStatus(error.message);
+        throw new Error(error.message);
       }
+    }
+
+    if (window.localStorage.getItem("decks") !== null) {
+      return { name: "success", message: "Successfully deck deleted" };
+    } else {
+      throw new Error("Error! Deck  didn`t delete");
     }
   }
 
-  deleteCard(
-    deckId: string,
-    cardId: string,
-    setStatus: (arg: string) => void
-  ): void {
+  deleteCard(deckId : string,  cardId: string): StatusItem {
     try {
       const request: string | null = localStorage.getItem("decks");
       if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = removingCard(respons, deckId, cardId);
+        const respons: Deck[] = JSON.parse(request);
+        const newDecks: Deck[] = removeCard(respons, deckId, cardId);
         window.localStorage.setItem("decks", JSON.stringify(newDecks));
       } else {
-        setStatus("Error not found data");
+        throw new Error("Error not found data");
       }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully card deleted"
-          : "Error! Card didn`t delete";
-      setStatus(status);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setStatus(error.message);
+        throw new Error(error.message);
       }
+    }
+
+    if (window.localStorage.getItem("decks") !== null) {
+      return { name: "success", message: "Successfully card deleted" };
+    } else {
+      throw new Error("Error! Card didn`t delete");
     }
   }
 
-  getDecks() {
-    const request = window.localStorage.getItem("decks");
-    if (typeof request === "string") {
-      const respons = JSON.parse(request);
-      return respons;
+  getDecks(): Deck[] | StatusItem | undefined {
+    try {
+      const request: string | null = localStorage.getItem("decks");
+      if (typeof request === "string") {
+        const respons: Deck[] = JSON.parse(request);
+        return respons;
+      } else {
+        throw new Error("Error not found data");
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 }

@@ -1,14 +1,32 @@
 import { FieldError } from "react-hook-form";
 
-import { Card, Decks } from "../hooks/interface";
+import { CardItem, DeckItem } from "../../../copy/src/components/forms/type";
+import { Card, Deck } from "../../../copy/src/hooks/interface";
 import { InputProps } from "./interface";
-import {
-  CreateInputsProps,
-  CreatingCard,
-  CreatingDeck,
-  RemovingCard,
-  RemovingDeck,
-} from "./type";
+
+ type CreateInputsProps = (
+  errors: { [x: string]: FieldError },
+  form: string
+) => InputProps;
+
+ type CreateCard = (
+  decks: Deck[],
+  deckId: string,
+  data: Card
+) => Deck[];
+
+type RemoveCard = (
+  decks: Deck[],
+  deckId: string,
+  cardId: string
+) => Deck[];
+
+type RemoveDeck = (decks: Deck[], deckId: string) => Deck[];
+
+type AddIdtoNewCard = (data: CardItem) => Card
+
+type AddIdtoNewDeck = (data: DeckItem) => Deck
+
 
 const createInputsProps: CreateInputsProps = (errors, form) => {
   const isValidForm: FieldError = errors[form || ""];
@@ -25,10 +43,19 @@ const createInputsProps: CreateInputsProps = (errors, form) => {
   return inputProps;
 };
 
-const creatingCard: CreatingCard = (decks, deckId, data) => {
-  const newState: Decks[] = [...decks];
+const addIdtoNewCard: AddIdtoNewCard = (data) => {
+    const newElement: Card = { id: +new Date(), ...data };
+    return newElement;
+};
+
+const addIdtoNewDeck: AddIdtoNewDeck = (data) => {
+  const newElement: Deck = { id: +new Date(), ...data, cards: [] };
+  return newElement;
+};
+
+const createCard: CreateCard = (decks, deckId, newCard) => {
+  const newState: Deck[] = [...decks];
   const elementsIndex: number = decks.findIndex((deck) => deck.id === +deckId);
-  const newCard: Card = { id: +new Date(), ...data };
   newState[elementsIndex] = {
     ...newState[elementsIndex],
     cards: [...newState[elementsIndex].cards, newCard],
@@ -36,13 +63,8 @@ const creatingCard: CreatingCard = (decks, deckId, data) => {
   return newState;
 };
 
-const creatingDeck: CreatingDeck = (data) => {
-  const newDeck: Decks = { id: +new Date(), ...data, cards: [] };
-  return newDeck;
-};
-
-const removingCard: RemovingCard = (decks, deckId, cardId) => {
-  const newState: Decks[] = [...decks];
+const removeCard: RemoveCard = (decks, deckId, cardId) => {
+  const newState: Deck[] = [...decks];
   const elementsIndex: number = decks.findIndex((deck) => deck.id === +deckId);
   const cards: Card[] = newState[elementsIndex].cards;
   const updatedCardsDeck: Card[] = cards.filter((card) => card.id !== +cardId);
@@ -53,16 +75,17 @@ const removingCard: RemovingCard = (decks, deckId, cardId) => {
   return newState;
 };
 
-const removingDeck: RemovingDeck = (decks, deckId) => {
-  const newState: Decks[] = [...decks];
-  const updatedState: Decks[] = newState.filter((deck) => deck.id !== +deckId);
+const removeDeck: RemoveDeck = (decks, deckId) => {
+  const newState: Deck[] = [...decks];
+  const updatedState: Deck[] = newState.filter((deck) => deck.id !== +deckId);
   return updatedState;
 };
 
 export {
   createInputsProps,
-  creatingCard,
-  creatingDeck,
-  removingCard,
-  removingDeck,
+  createCard,
+  removeCard,
+  removeDeck,
+  addIdtoNewCard,
+  addIdtoNewDeck
 };

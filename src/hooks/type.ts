@@ -1,23 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
 import { Params } from "react-router";
 
-import { CardItems, DeckItems } from "../components/forms/interface";
-import { Card, Decks } from "./interface";
+import { CardItem, DeckItem } from "../components/forms/type";
+import { Card } from "./interface";
 
-export type GetSelectedCardsDeck = (id: string | undefined) => Card[] | undefined;
+type NewItems = CardItem | DeckItem | undefined;
 
-export type NewItems = CardItems | DeckItems;
+type UpdateDataProp = string & CardItem & DeckItem
 
-export type UpdatingDecks = (newItems: NewItems, urlParams: Params) => void;
+export type GetSelectedCardsDeck = (id: string | undefined) => Card[] | [];
 
-export type DecksState = {
-  decks: Decks[];
-  getSelectedCardsDeck: GetSelectedCardsDeck;
-  updatingDecks: UpdatingDecks;
-};
+export type UpdateDecks = (urlParams: Params, newItems?: NewItems, ) => void;
 
-export type UpdatingState = (
-  decks: Decks[],
-  setDecks: { (value: SetStateAction<Decks[]>): void; (arg: any[]): void },
-  setStatus: Dispatch<any>
-) => UpdatingDecks;
+export type UpdateData = (action: string, ...rest: UpdateDataProp[]) => void;

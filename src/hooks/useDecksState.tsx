@@ -1,34 +1,32 @@
-import { useState } from 'react';
-import useUpdatingState from './useUpdatingState';
+import { useState } from "react";
 
-import { DataManagment } from '../helper/interlayer';
-import { Decks } from './interface'
-import { GetSelectedCardsDeck, DecksState } from './type'
+import { useUpdateState } from "./useUpdateState";
 
-function useDecksState(): DecksState {
-    const [decks, setDecks] = useState<Decks[]>(() => {
-        const request = new DataManagment();
-        const response = request.getDecks();
-        return response
-    });
+import { AlertProps, Deck } from "./interface";
+import { GetSelectedCardsDeck, UpdateDecks } from "./type";
 
-    const [status, setStatus] = useState<string | undefined>()
+type DecksState = {
+  getSelectedCardsDeck: GetSelectedCardsDeck;
+  updateDecks: UpdateDecks;
+  alertProps: AlertProps,
+};
 
-    const updatingDecks = useUpdatingState(decks, setDecks, setStatus)
+export function useDecksState(): DecksState {
+  const [decks, setDecks] = useState<Deck[]>([]);
 
-    const getSelectedCardsDeck: GetSelectedCardsDeck = (id) => {
-        if (typeof id === 'string') {
-            const elementsIndex: number = decks.findIndex((deck) => deck.id === +id)
-            return decks[elementsIndex].cards
-        }
+  const { updateDecks, alertProps } = useUpdateState(decks, setDecks);
+
+  const getSelectedCardsDeck: GetSelectedCardsDeck = (id) => {
+    if (typeof id === "string" && decks.length) {
+      const elementsIndex: number = decks.findIndex((deck) => deck.id === +id);
+      return decks[elementsIndex].cards;
     }
-    
-    return {
-        decks,
-        getSelectedCardsDeck,
-        updatingDecks,
-    };
+    return [];
+  };
 
+  return {
+    getSelectedCardsDeck,
+    updateDecks,
+    alertProps,
+  };
 }
-
-export default useDecksState;
