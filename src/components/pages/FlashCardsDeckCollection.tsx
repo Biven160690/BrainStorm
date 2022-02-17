@@ -1,31 +1,46 @@
-import { Route, Routes } from 'react-router-dom';
-import FlashCardsDeck from '../flashCardsDeck/FlashCardsDeck';
-import GridsWrapper from '../wrappers/GridsWrapper';
-import ModalsControl from '../forms/ModalsControl';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import { FlashCardsDeckCollectionProps } from './types';
+import { FlashCardsDeck } from "../flashCardsDeck/FlashCardsDeck";
+import { GridsWrapper } from "../wrapper/GridsWrapper";
+import { ModalsControl } from "../modal";
+import { Loading } from "../loading/Loading";
 
-function FlashCardsDeckCollection({ decks, updatingDecks }: FlashCardsDeckCollectionProps) {
+import { UpdateDecks } from "../../hooks/type";
+import { Deck } from "../../hooks/interface";
 
+type FlashCardsDeckCollectionProps = {
+  decks: Deck[];
+  updateDecks: UpdateDecks;
+  isLoading: boolean;
+};
+
+export function FlashCardsDeckCollection({
+  decks,
+  updateDecks,
+  isLoading,
+}: FlashCardsDeckCollectionProps) {
   return (
-    <>
-      <GridsWrapper>
-        {decks?.map((deck) => {
-          return (
-            <FlashCardsDeck key={deck.id} {...deck} />
-          );
-        })}
-      </GridsWrapper>
+    <React.Fragment>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <GridsWrapper>
+          {decks.map((deck) => {
+            return <FlashCardsDeck key={deck.id} {...deck} />;
+          })}
+        </GridsWrapper>
+      )}
       <Routes>
         <Route
-          path=':action/:item/:deckId'
-          element={<ModalsControl updatingDecks={updatingDecks} />} />
+          path=":action/:item/:deckId"
+          element={<ModalsControl updateDecks={updateDecks} />}
+        />
         <Route
-          path=':action'
-          element={<ModalsControl updatingDecks={updatingDecks} />} />
+          path=":action"
+          element={<ModalsControl updateDecks={updateDecks} />}
+        />
       </Routes>
-    </>
-  )
+    </React.Fragment>
+  );
 }
-
-export default FlashCardsDeckCollection
