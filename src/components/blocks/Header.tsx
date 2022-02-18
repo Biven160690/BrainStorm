@@ -4,8 +4,6 @@ import { AppBar, Box, Button, Typography, Toolbar, Link as Links } from "@mui/ma
 
 import { useStyles } from "../../theme/style";
 
-import { ADD_DECK_FORM } from '../constants';
-
 interface HeaderProps {
   handelClick: (url: string) => () => void
 }
@@ -17,7 +15,9 @@ export function Header({ handelClick }: HeaderProps) {
   
   const match: PathMatch<string> | null = useMatch('/')
 
-  const url: string = match ? `${pathname + ADD_DECK_FORM}` : `${pathname}/${ADD_DECK_FORM}`
+  const url: string = match
+  ? `${pathname + "add-deck"}`
+  : `${pathname}/${"add-deck"}`;
 
   return (
     <AppBar color="inherit" role="toolbar">

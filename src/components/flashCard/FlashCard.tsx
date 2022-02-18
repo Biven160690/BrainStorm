@@ -1,37 +1,44 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import ReactCardFlip from 'react-card-flip';
-import Box from "@mui/material/Box";
-import { Card as Cards, CardActionArea } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+import ReactCardFlip from "react-card-flip";
+import {
+  Box,
+  Card as Cards,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+  Rating,
+  Stack,
+  IconButton,
+} from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
 
 import { useStyles } from "../../theme/style";
+
 import { Card } from "../../hooks/interface";
 
-import { DELETE_CARD_FORM } from '../constants';
+export function FlashCard({ id, translation, ...rest }: Card) {
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
 
-function FlashCard({ id, translation, ...rest }: Card) {
-  const [isFlipped, setIsFlipped] = useState<boolean>(false)
-  
-  const { flashCard, flashCardContext, flashCardAction, flashCardDeleteButton } = useStyles();
+  const {
+    flashCard,
+    flashCardContext,
+    flashCardAction,
+    flashCardDeleteButton,
+  } = useStyles();
 
-  const handleClick = () => setIsFlipped(prevState => !prevState)
+  const handleClick = () => setIsFlipped((prevState) => !prevState);
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={4} role="gridcell">
       <ReactCardFlip isFlipped={isFlipped}>
         <Cards className={flashCard}>
           <CardActionArea onClick={handleClick}>
-            <CardContent className={flashCardContext} >
+            <CardContent className={flashCardContext}>
               <Typography gutterBottom variant="h5">
-                {rest['new word']}
+                {rest["new word"]}
               </Typography>
             </CardContent>
             <CardActions className={flashCardAction}>
@@ -43,10 +50,10 @@ function FlashCard({ id, translation, ...rest }: Card) {
           <Box className={flashCardDeleteButton}>
             <IconButton
               color="error"
-              aria-label="delete card"
+              aria-label="delete card front side"
               component={Link}
-              to={`${DELETE_CARD_FORM}/${id}`}
-              state={{ open: true }}
+              to={`${"delete-card"}/${id}`}
+              state={{ open: true, selectedItem: rest["new word"] }}
             >
               <Delete />
             </IconButton>
@@ -55,7 +62,7 @@ function FlashCard({ id, translation, ...rest }: Card) {
 
         <Cards className={flashCard}>
           <CardActionArea onClick={handleClick}>
-            <CardContent className={flashCardContext} >
+            <CardContent className={flashCardContext}>
               <Typography gutterBottom variant="h5">
                 {translation}
               </Typography>
@@ -69,10 +76,10 @@ function FlashCard({ id, translation, ...rest }: Card) {
           <Box className={flashCardDeleteButton}>
             <IconButton
               color="error"
-              aria-label="delete card"
+              aria-label="delete card back side"
               component={Link}
-              to={`${DELETE_CARD_FORM}/${id}`}
-              state={{ open: true }}
+              to={`${"delete-card"}/${id}`}
+              state={{ open: true, selectedItem: translation }}
             >
               <Delete />
             </IconButton>
@@ -82,5 +89,3 @@ function FlashCard({ id, translation, ...rest }: Card) {
     </Grid>
   );
 }
-
-export default FlashCard;
