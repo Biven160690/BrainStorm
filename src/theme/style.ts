@@ -35,7 +35,6 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
     zIndex: -1,
     width: "100%",
     height: 80,
-    backgroundColor: theme.palette.grey[200],
   },
 
   footerContext: {
@@ -47,7 +46,7 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
 
   flashCardsDeck: {
     position: "relative",
-    maxWidth: 500,
+    width: 400,
     "& a": {
       textDecoration: "none",
     },
@@ -64,12 +63,12 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
   flashCardsDeckActions: {
     position: "absolute",
     top: 90,
-    left: 370,
+    left: 300,
   },
 
   flashCard: {
     position: "relative",
-    width: "auto",
+    width: 380,
     height: "auto",
   },
 
@@ -83,22 +82,30 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
   flashCardDeleteButton: {
     position: "absolute",
     top: 130,
-    left: 420,
+    left: 320,
   },
 
   flashCardAction: {
     height: 40,
   },
 
-  formTitle: {
-    textAlign: "center",
+  emptyCardsDeck: {
+    display: "flex",
+    justifyContent: "center",
   },
+
+  formTitle: { textAlign: "center" },
 
   formInputs: {
     display: "flex",
     justifyContent: "space-between",
     padding: 20,
     "& .MuiInputBase-root": { margin: 5 },
+  },
+
+  formButtons: {
+    display: "flex",
+    justifyContent: "flex-end",
   },
 
   notFound: {
@@ -115,5 +122,20 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
     "& h6": {
       textAlign: "center",
     },
+  },
+
+  error: {
+    width: 400,
+    height: 150,
+    color: "red",
+    "&": {
+      textAlign: "center",
+    },
+  },
+
+  loading: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
   },
 }));

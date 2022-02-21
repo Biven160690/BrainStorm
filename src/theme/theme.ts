@@ -9,11 +9,9 @@ declare module '@material-ui/core/styles/createTheme' {
   }
 }
 
-let theme: Theme = createTheme({
+export let theme: Theme = createTheme({
   itemsPosition: {
     display: "flex",
     justifyContent: "space-between",
   },
 });
-
-export default theme;
