@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
   main: {
     marginTop: 50,
     padding: 30,
-    height: 500,
+    height: 500
   },
 
   footer: {
