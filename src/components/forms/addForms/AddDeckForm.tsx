@@ -21,8 +21,10 @@ export function AddDeckForm({ handleClickGoBack, onSubmit, }: AddDeckFormProps) 
 
   const { formInputs, formButtons } = useStyles();
 
+  const getData = (data: DeckItem) => onSubmit(data)
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(getData)}>
       <Box className={formInputs}>
         <Controller
           render={({ field }) => (

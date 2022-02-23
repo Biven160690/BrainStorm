@@ -21,8 +21,10 @@ export function AddCardForm({ handleClickGoBack, onSubmit }: AddCardFormProps) {
 
   const { formInputs, formButtons } = useStyles();
 
+  const getData = (data: CardItem) => onSubmit(data)
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(getData)}>
       <Box className={formInputs}>
         <Controller
           render={({ field }) => (
