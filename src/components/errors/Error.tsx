@@ -2,7 +2,6 @@ import { useStyles } from "../../theme/style";
 
 import { StatusItem } from "../../helper/interface";
 
-
 type ErrorsProp = ( { hasError }: { hasError?: StatusItem | undefined} ) => JSX.Element
 
 export const Error: ErrorsProp = ({ hasError }) => {

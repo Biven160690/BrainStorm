@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@mui/material/styles'
 
-import RootRouter from '../router/RootRouter';
+import { RootRouter } from "../router/RootRouter";
 
-import theme from '../theme/theme';
+import { theme } from "../theme/theme";
 
 function App() {
   

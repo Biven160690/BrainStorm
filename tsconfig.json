@@ -20,6 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src", "../../Practic/My_shorthahd_code/helper.ts" ]
+  "include": ["src"]
 }
