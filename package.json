@@ -32,12 +32,102 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "ecmaVersion": 11,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "react-hooks",
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "rules": {
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".jsx",
+            ".tsx"
+          ]
+        }
+      ],
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          "markers": [
+            "/"
+          ]
+        }
+      ],
+      "react/prop-types": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "jsxSingleQuote": true,
+          "arrowParens": "always",
+          "max-len": [
+            "error",
+            140,
+            2
+          ],
+          "tabWidth": 2,
+          "useTabs": false,
+          "bracketSameLine": true
+        }
+      ]
+    },
+    "settings": {
+      "import/extensions": [
+        ".js",
+        ".jsx",
+        ".ts",
+        ".tsx"
+      ],
+      "import/parsers": {
+        "@typescript-eslint/parser": [
+          ".ts",
+          ".tsx"
+        ]
+      },
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+          ]
+        }
+      },
+      "react": {
+        "version": "detect"
+      }
+    },
+    "eslintIgnore": [
+      "node_modules/",
+      "public/"
     ]
   },
   "browserslist": {
@@ -53,6 +143,13 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "2.5.1"
   }
 }
