@@ -1,115 +1,79 @@
-import { CardItems, DeckItems } from "../components/forms/interface";
-import { Decks } from "../hooks/interface";
+import { createCollection, db } from '../firebase';
 import {
-  creatingCard,
-  creatingDeck,
-  removingCard,
-  removingDeck,
-} from "./helperFunctions";
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 
-export class DataManagment {
-  addCard(
-    deckId: string,
-    newItems: CardItems,
-    setStatus: (arg: string) => void
-  ): void {
-    try {
-      const request: string | null = window.localStorage.getItem("decks");
-      if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = creatingCard(respons, deckId, newItems);
-        window.localStorage.setItem("decks", JSON.stringify(newDecks));
-      } else {
-        setStatus("Error not found data");
-      }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully card added"
-          : "Error card added";
-      setStatus(status);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setStatus(error.message);
-      }
+import { AddCardProps, DataDeck, DataCard } from '../hooks/interface';
+import { Repetition } from './interface';
+
+export class DataManagement {
+  async addCard({ newCard, deckId }: AddCardProps): Promise<void> {
+    await setDoc(doc(db, `cardsDecks/${deckId}/cards/${newCard.id}`), {
+      ...newCard,
+    });
+  }
+
+  async addDeck(newDeck: DataDeck): Promise<void> {
+    await setDoc(doc(db, `cardsDecks/${newDeck.id}`), { ...newDeck });
+  }
+
+  async deleteDeck(deckId: string): Promise<void> {
+    await Promise.all([
+      this.deleteNestedCollections(deckId),
+      deleteDoc(doc(db, `cardsDecks/${deckId}`)),
+    ]);
+  }
+
+  async deleteNestedCollections(deckId: string): Promise<void> {
+    const cardsDeck = await getDocs(
+      collection(db, `cardsDecks/${deckId}/cards`)
+    );
+    if (!cardsDeck.empty) {
+      cardsDeck.forEach((docs) => {
+        deleteDoc(doc(db, `cardsDecks/${deckId}/cards/${docs.id}`));
+      });
     }
   }
 
-  addDeck(data: DeckItems, setStatus: (arg: string) => void): void {
-    try {
-      const request: string | null = window.localStorage.getItem("decks");
-      if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks = creatingDeck(data);
-        const updatedDecks: Decks[] = [...respons, newDecks];
-        window.localStorage.setItem("decks", JSON.stringify(updatedDecks));
-      } else {
-        setStatus("Error not found data");
-      }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully deck added"
-          : "Error! Deck didn`t add";
-      setStatus(status);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setStatus(error.message);
-      }
-    }
+  async deleteCard(deckId: string, cardId: string): Promise<void> {
+    await deleteDoc(doc(db, `cardsDecks/${deckId}/cards/${cardId}`));
   }
 
-  deleteDeck(deckId: string, setStatus: (arg: string) => void): void {
-    try {
-      const request: string | null = window.localStorage.getItem("decks");
-      if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = removingDeck(respons, deckId);
-        window.localStorage.setItem("decks", JSON.stringify(newDecks));
-      } else {
-        setStatus("Error not found data");
-      }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully deck deleted"
-          : "Error! Deck  didn`t delete";
-      setStatus(status);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setStatus(error.message);
-      }
-    }
+  async getDecks(): Promise<DataDeck[]> {
+    const cardsDecksCollection = createCollection<DataDeck>('cardsDecks');
+
+    const docDecks = await getDocs(cardsDecksCollection);
+    return docDecks.empty ? [] : docDecks.docs.map((card) => card.data());
   }
 
-  deleteCard(
-    deckId: string,
-    cardId: string,
-    setStatus: (arg: string) => void
-  ): void {
-    try {
-      const request: string | null = localStorage.getItem("decks");
-      if (typeof request === "string") {
-        const respons: Decks[] = JSON.parse(request);
-        const newDecks: Decks[] = removingCard(respons, deckId, cardId);
-        window.localStorage.setItem("decks", JSON.stringify(newDecks));
-      } else {
-        setStatus("Error not found data");
-      }
-      const status: string =
-        window.localStorage.getItem("decks") !== null
-          ? "Successfully card deleted"
-          : "Error! Card didn`t delete";
-      setStatus(status);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setStatus(error.message);
-      }
-    }
+  async getCards(deckId: string): Promise<DataCard[]> {
+    const cardsCollection = createCollection<DataCard>(
+      `cardsDecks/${deckId}/cards`
+    );
+
+    const selectedCards = query(
+      cardsCollection,
+      where('repetitionConditions.msToNextReview', '<=', Date.now())
+    );
+    const docCards = await getDocs(selectedCards);
+    return docCards.empty ? [] : docCards.docs.map((card) => card.data());
   }
 
-  getDecks() {
-    const request = window.localStorage.getItem("decks");
-    if (typeof request === "string") {
-      const respons = JSON.parse(request);
-      return respons;
-    }
+  async updateRepetitionsData(
+    idDeck: number,
+    idCard: number,
+    nextReviewDueDate: Repetition
+  ): Promise<void> {
+    await setDoc(
+      doc(db, `cardsDecks/${idDeck}/cards/${idCard}`),
+      { repetitionConditions: nextReviewDueDate },
+      { merge: true }
+    );
   }
 }

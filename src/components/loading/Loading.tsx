@@ -1,6 +1,6 @@
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box } from '@mui/material';
 
-import { useStyles } from "../../theme/style";
+import { useStyles } from '../../theme/style';
 
 export const Loading = () => {
   const { loading } = useStyles();
@@ -10,4 +10,4 @@ export const Loading = () => {
       <CircularProgress />
     </Box>
   );
-}
+};
