@@ -1,23 +1,16 @@
-import { Box, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import React from 'react';
 
-import { useStyles } from "../../theme/style";
+import { Box, Dialog } from '@mui/material';
 
-type ModalProps = {
-  header: string;
-  handleClickGoBack: () => void;
-  isOpenModal: boolean
+interface ModalProps {
+  isOpenModal: boolean;
   children: React.ReactNode;
-};
+}
 
-export function Modal({ header, handleClickGoBack, isOpenModal, children }: ModalProps) {
-  const { formTitle } = useStyles();
-
+export const Modal = ({ isOpenModal, children }: ModalProps) => {
   return (
     <Box>
-      <Dialog open={isOpenModal} onClose={handleClickGoBack}>
-        <DialogTitle className={formTitle}>{header}</DialogTitle>
-        <DialogActions>{children}</DialogActions>
-      </Dialog>
+      <Dialog open={isOpenModal}>{children}</Dialog>
     </Box>
   );
-}
+};

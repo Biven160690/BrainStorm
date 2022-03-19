@@ -1,2 +1,2 @@
-export * from './DeleteCardForm'
-export * from './DeleteDeckForm'
+export * from './DeleteCardForm';
+export * from './DeleteDeckForm';

@@ -1,30 +1,15 @@
-import { Button } from "@mui/material";
+import React from 'react';
 
-type DeleteCardFormProps = {
-  handleClickGoBack: () => void;
-  onSubmit: () => void;
-};
+import { FormsButtons } from './FormsButtons';
 
-type handleSubmitProps = (e: React.FormEvent<HTMLFormElement>) => void;
+interface DeleteCardFormProps {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
-export const DeleteCardForm = ({
-  handleClickGoBack,
-  onSubmit,
-}: DeleteCardFormProps) => {
-  
-  const handleSubmit: handleSubmitProps = (e) => {
-    e.preventDefault();
-    onSubmit();
-  };
-
+export const DeleteCardForm = ({ handleSubmit }: DeleteCardFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Button type="button" color="primary" onClick={handleClickGoBack}>
-        Cancel
-      </Button>
-      <Button type="submit" color="error">
-        Delete
-      </Button>
+      <FormsButtons />
     </form>
   );
 };

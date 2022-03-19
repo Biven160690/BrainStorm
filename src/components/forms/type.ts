@@ -1,9 +1,9 @@
-export type CardItem = {
-  "new word": string;
+export interface NewCard {
+  'new word': string;
   translation: string;
-};
+}
 
-export type DeckItem = {
+export interface NewDeck {
   title: string;
   description: string;
-};
+}

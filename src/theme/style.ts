@@ -1,5 +1,5 @@
-import { makeStyles } from "@mui/styles";
-import { Theme } from "@mui/system";
+import { makeStyles } from '@mui/styles';
+import { Theme } from '@mui/system';
 
 interface MyTheme {
   itemsPosition?: {
@@ -9,11 +9,6 @@ interface MyTheme {
 }
 
 export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-  },
-
   header: {
     ...theme.itemsPosition,
   },
@@ -24,118 +19,117 @@ export const useStyles = makeStyles((theme: Theme & MyTheme) => ({
   },
 
   main: {
-    marginTop: 50,
-    padding: 30,
-    height: 500
+    padding: '80px 20px 20px 20px',
+    minHeight: 'calc(100vh - 50px)',
   },
 
   footer: {
-    position: "fixed",
-    bottom: 0,
-    zIndex: -1,
-    width: "100%",
-    height: 80,
+    height: '50px',
+    backgroundColor: 'rgb(219, 224, 228)',
   },
 
-  footerContext: {
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  footerContent: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   flashCardsDeck: {
-    position: "relative",
-    width: 400,
-    "& a": {
-      textDecoration: "none",
+    position: 'relative',
+    '& a': {
+      textDecoration: 'none',
     },
   },
 
-  flashCardsDeckContext: {
-    display: "flex",
-    flexDirection: "column",
-    "& p": {
+  flashCardsDeckContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& p': {
       paddingTop: 10,
     },
   },
 
   flashCardsDeckActions: {
-    position: "absolute",
-    top: 90,
-    left: 300,
+    position: 'absolute',
+    right: 9,
+    bottom: 2,
+  },
+
+  backSideCard: {
+    position: 'relative',
   },
 
   flashCard: {
-    position: "relative",
-    width: 380,
-    height: "auto",
+    position: 'relative',
   },
 
-  flashCardContext: {
-    display: "flex",
-    height: 90,
-    justifyContent: "center",
-    alignItems: "flex-end",
+  flashCardContent: {
+    display: 'flex',
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 
   flashCardDeleteButton: {
-    position: "absolute",
-    top: 130,
-    left: 320,
+    position: 'absolute',
+    right: 9,
+    bottom: 5,
+  },
+
+  flashCardRating: {
+    position: 'absolute',
+    left: 9,
+    bottom: 9,
+    '& button': { marginRight: 4 },
   },
 
   flashCardAction: {
     height: 40,
   },
 
-  emptyCardsDeck: {
-    display: "flex",
-    justifyContent: "center",
-  },
-
-  formTitle: { textAlign: "center" },
+  formTitle: { textAlign: 'center' },
 
   formInputs: {
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between',
     padding: 20,
-    "& .MuiInputBase-root": { margin: 5 },
+    '& .MuiInputBase-root': { margin: 5 },
   },
 
   formButtons: {
-    display: "flex",
-    justifyContent: "flex-end",
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 
   notFound: {
-    position: "absolute",
-    width: "100%",
-    top: "40%",
-    display: "flex",
-    justifyContent: "center",
+    position: 'absolute',
+    width: '100%',
+    top: '40%',
+    display: 'flex',
+    justifyContent: 'center',
   },
 
-  notFoundContext: {
-    display: "flex",
-    flexDirection: "column",
-    "& h6": {
-      textAlign: "center",
+  notFoundContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& h6': {
+      textAlign: 'center',
     },
   },
 
   error: {
     width: 400,
     height: 150,
-    color: "red",
-    "&": {
-      textAlign: "center",
+    color: 'red',
+    '&': {
+      textAlign: 'center',
     },
   },
 
   loading: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
   },
 }));

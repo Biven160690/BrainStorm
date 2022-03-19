@@ -1,12 +1,27 @@
-export interface Card {
+import { NewCard, NewDeck } from '../components/forms/type';
+import { Repetition } from '../helper/interface';
+
+export interface DataCard extends NewCard {
   id: number;
-  "new word": string;
-  translation: string;
+  repetitionConditions: Repetition;
 }
 
-export interface Decks {
+export interface DataDeck extends NewDeck {
   id: number;
-  title: string;
-  description: string;
-  cards: Card[];
+}
+
+export interface Status {
+  name: string;
+  message: string;
+}
+
+export interface AlertProps {
+  status: Status;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<boolean>;
+}
+
+export interface AddCardProps {
+  newCard: DataCard;
+  deckId: string;
 }
