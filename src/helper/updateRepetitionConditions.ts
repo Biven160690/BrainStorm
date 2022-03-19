@@ -23,7 +23,6 @@ export const updateRepetitionConditions: NextReviewDueDate = (
       : 1
   );
   const msToNextReview = Date.now() + daysToNextReview * 86400000;
-  console.log(msToNextReview);
 
   return {
     easiness: nextEasiness,
