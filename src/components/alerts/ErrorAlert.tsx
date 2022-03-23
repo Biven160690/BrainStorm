@@ -16,7 +16,7 @@ export const ErrorAlert = ({ status, isOpen, setIsOpen }: AlertProps) => {
         severity='error'
         sx={{ width: '100%' }}
         variant='filled'>
-        <AlertTitle>{status.name + ':  ' + status.message}</AlertTitle>
+        <AlertTitle>{status?.name + ':  ' + status?.message}</AlertTitle>
       </Alert>
     </Snackbar>
   );

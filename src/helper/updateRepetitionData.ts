@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 
 import { updateRepetitionConditions } from './updateRepetitionConditions';
-import { DataManagement } from './interlayer';
+import { DataManagement } from './dataManagement';
 import { RepetiCardsData } from './interface';
 
 type UpdateRepetitionData = (

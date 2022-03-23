@@ -16,7 +16,7 @@ export const SuccessAlert = ({ status, isOpen, setIsOpen }: AlertProps) => {
         severity='success'
         sx={{ width: '100%' }}
         variant='filled'>
-        <AlertTitle>{status.name + ':  ' + status.message}</AlertTitle>
+        <AlertTitle>{status?.name + ':  ' + status?.message}</AlertTitle>
       </Alert>
     </Snackbar>
   );
