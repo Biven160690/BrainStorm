@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, MouseEvent, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { DataManagement } from '../helper/interlayer';
+import { DataManagement } from '../helper/dataManagement';
 
 import { RepetiCardsData } from '../helper/interface';
 import { updateRepetitionData } from '../helper/updateRepetitionData';
@@ -27,7 +27,7 @@ interface UpdateCardsDB {
     event: MouseEvent<HTMLButtonElement | HTMLDivElement>
   ) => void;
   setDataToUpdateDB: React.Dispatch<React.SetStateAction<DataToUpdateDB>>;
-  status: Status;
+  status: Status | undefined;
   isOpen: boolean;
   setIsOpen: React.Dispatch<boolean>;
 }
@@ -38,10 +38,7 @@ type GetRepetitionData = (
 ) => void;
 
 export function useUpdateCardsDB(): UpdateCardsDB {
-  const [status, setStatus] = useState<Status>({
-    name: 'Warning',
-    message: ' Oops, something went wrong! Please repeat again',
-  });
+  const [status, setStatus] = useState<Status>();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -61,7 +58,9 @@ export function useUpdateCardsDB(): UpdateCardsDB {
   const addDeck = useCallback(
     async (newDeck: DataDeck) => {
       try {
-        await dataManagement.addDeck(newDeck);
+        const status = await dataManagement.addDeck(newDeck);
+        setStatus(status);
+        setIsOpen(true);
       } catch (error) {
         if (error instanceof Error) {
           setStatus(error);
@@ -76,7 +75,9 @@ export function useUpdateCardsDB(): UpdateCardsDB {
     async (urlParams: DeleteCardProps) => {
       const { deckId, cardId } = urlParams;
       try {
-        await dataManagement.deleteCard(deckId, cardId);
+        const status = await dataManagement.deleteCard(deckId, cardId);
+        setStatus(status);
+        setIsOpen(true);
       } catch (error) {
         if (error instanceof Error) {
           setStatus(error);

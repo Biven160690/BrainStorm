@@ -16,7 +16,7 @@ export interface Status {
 }
 
 export interface AlertProps {
-  status: Status;
+  status: Status | undefined;
   isOpen: boolean;
   setIsOpen: React.Dispatch<boolean>;
 }

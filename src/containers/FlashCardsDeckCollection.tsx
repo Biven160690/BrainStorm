@@ -8,7 +8,7 @@ import { Loading } from '../components/loading/Loading';
 import { useUpdateDecksDB } from '../hooks';
 import { DecksRouter } from '../routers';
 
-import { DataManagement } from '../helper/interlayer';
+import { DataManagement } from '../helper/dataManagement';
 
 import {
   createNewCard,

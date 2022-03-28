@@ -1,4 +1,4 @@
-import { ErrorAlert, SuccessAlert, WarningAlert } from '../components/alerts';
+import { ErrorAlert, SuccessAlert } from '../components/alerts';
 
 import { AlertProps } from '../hooks/interface';
 
@@ -9,8 +9,6 @@ export const triggerAlert = (alertProps: AlertProps) => {
         return <ErrorAlert {...alertProps} />;
       case 'Success':
         return <SuccessAlert {...alertProps} />;
-      case 'Warning':
-        return <WarningAlert {...alertProps} />;
     }
   }
 };

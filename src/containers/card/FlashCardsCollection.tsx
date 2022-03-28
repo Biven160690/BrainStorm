@@ -11,7 +11,7 @@ import { CardsRouter } from '../../routers';
 
 import { triggerAlert } from '../../helper/triggerAlert';
 
-import { DataManagement } from '../../helper/interlayer';
+import { DataManagement } from '../../helper/dataManagement';
 
 import { DataCard, DataDeck } from '../../hooks/interface';
 import { NewDeck } from '../../components/forms/type';
